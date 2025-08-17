@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>염색약 계산기</title>
+
+  <!-- iPhone 홈 화면 앱화 설정 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="염색약 계산기">
+  <link rel="apple-touch-icon" href="icon.png"> <!-- 홈화면 아이콘 (512x512 권장) -->
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      max-width: 350px;
+      background: #fff;
+      padding: 24px 20px 20px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      margin-bottom: 18px;
+      color: #333;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-bottom: 12px;
+      color: #222;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      padding: 12px;
+      margin-top: 16px;
+      background: #664de5;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #4a36b9;
+    }
+    #result {
+      margin-top: 18px;
+      font-size: 16px;
+      color: #1a1a1a;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>염색약 계산기</h2>
+    <label>총량(g):
+      <input type="number" id="total" value="200" min="1" step="any">
+    </label>
+    <label>A 비율:
+      <input type="number" id="ratioA" value="1" min="1" step="any">
+    </label>
+    <label>B 비율:
+      <input type="number" id="ratioB" value="3" min="1" step="any">
+    </label>
+    <!-- iOS Safari 대응: 버튼 타입 명시 -->
+    <button type="button" onclick="calculate()">계산</button>
+    <p id="result"></p>
+  </div>
+  <script>
+    function calculate() {
+      let total = parseFloat(document.getElementById('total').value);
+      let A = parseFloat(document.getElementById('ratioA').value);
+      let B = parseFloat(document.getElementById('ratioB').value);
+      if(isNaN(total) || isNaN(A) || isNaN(B) || total <= 0 || A <= 0 || B <= 0){
+          document.getElementById('result').innerText = "올바른 값을 입력하세요.";
+          return;
+      }
+      let amountA = total * (A/(A+B));
+      let amountB = total * (B/(A+B));
+      document.getElementById('result').innerText =
+          `A염색약: ${amountA.toFixed(1)}g, B염색약: ${amountB.toFixed(1)}g`;
+    }
+  </script>
+</body>
+</html>
